@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Object Detection</title>
+    <style>
+        body {
+            /* background: linear-gradient(to bottom, #4f8bf9, #3366ff); */
+            background-color: white;
+            font-family: Arial, sans-serif;
+            text-align: center; /* Aligning all items in the center */
+        }
+        
+        .navbar {
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            display: flex; /* Enable flexbox layout */
+            justify-content: space-between; /* Align items at the ends of the navbar */
+            align-items: center; /* Center align vertically */
+        }
+        
+        .logo {
+            color:black;
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+            margin-left: 20px; /* Add left margin to create space from the left end */
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+        
+        .person-count {
+            font-size: 36px; /* Increase font size for better visibility */
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        img {
+            display: block; /* Remove default image alignment */
+            margin: 0 auto; /* Center align the image */
+            /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); */
+            border-radius: 10px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="navbar">
+        <a href="#" class="logo">Person Detection</a>
+        <img src="{{ url_for('static', filename='ADA LOGO.png') }}" width="50" height="50" style="margin-right: 20px;">
+
+        <!-- <img src="ADA LOGO.png" width="50" height="50" style="margin-right: 20px;"> -->
+    </div>
+    <div class="container">
+        <img src="{{ url_for('video_feed') }}" width="500" height="375">
+        <div class="person-count">
+            Total Persons: <span id="total_persons">0</span>
+        </div>
+    </div>
+    <script>
+        // Function to update the total persons count
+        function updateTotalPersons() {
+            $.getJSON('/get_total_persons', function(data) {
+                $('#total_persons').text(data.total_persons);
+            });
+        }
+
+        // Periodically update the total persons count
+        setInterval(updateTotalPersons, 1000);
+    </script>
+</body>
+</html>
